@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>organization</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!--Table -->
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#userTable').DataTable();
+        });
+    </script>
+</head>
+<body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update organization</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:object="${organization}" th:action="@{/organization/updategroup}" th:method="POST">
+            <div class="modal-body">
+                <div class="col-12">
+                    <label for="title" class="form-label">Title</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" th:field="*{title}" name="title" id="title" required>
+                        <div class="invalid-feedback">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" th:field="*{description}" name="description" id="description"  required>
+                        <div class="invalid-feedback">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                        <input type="email" class="form-control" th:field="*{email}" name="email" id="email" required>
+                        <div class="invalid-feedback">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" th:field="*{organizersEvents}" name="organizersEvents"/>
+                <input type="hidden" th:field="*{organizerId}" name="organizerId"/>
+                <input type="hidden" th:field="*{isActive}" name="isActive"/>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" >Reset</button>
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<header th:insert="header.html :: nav"></header>
+<main style="margin-top: 4%" th:if="${organization.getIsActive() == 1}">
+    <div class="list-group">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h2 class="fw-light"  th:text="${organization.getTitle()}"></h2>
+                <p class="lead text-muted" th:text="${organization.getEmail()}"></p>
+                <p class="lead text-muted" th:text="${organization.getDescription()}"></p>
+                <p>
+                    <div class="btn-group" role="group">
+                    <a href="/organization/add">
+                        <button type="button" class="btn btn-primary my-2">Add event</button>
+                    </a>
+                        <button sec:authorize="${hasAuthority('ROLE_ORGANIZERBOSS')}"  data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-secondary my-2">Update organization</button>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </section>
+    </div>
+    <div class="b-example-divider"></div>
+    <div class="list-group" style="margin-left: 7%; margin-top: 5%;">
+        <div style="display: grid; grid-template-columns: 30% 30% 30%;
+         grid-column-gap: 2%; grid-row-gap: 2%;">
+            <div th:each="resultevents:${organization.getOrganizersEvents()}">
+                <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                         th:src="@{${resultevents.getSecondPoster()}}" />
+                    <div class="card-body">
+                        <h5 class="card-text" th:if="${resultevents.isActive == 1}" th:text="${resultevents.getTitle()}"></h5>
+                        <h5 class="card-text" style="color: #eb5165" th:if="${resultevents.isActive == 0}" th:text="${resultevents.getTitle()}"></h5>
+                        <p class="card-text" th:text="${resultevents.getDescription()}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/allevents/event/{id} (id=${resultevents.getEventId()})}" >
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                </a>
+                                <a th:href="@{/organization/event/{id}/edit (id=${resultevents.getEventId()})}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </a>
+                            </div>
+                            <small class="text-muted" th:text="${resultevents.getStringDate()}"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-example-divider"></div>
+    <br>
+    <div style="margin-top: 5%;margin-left: 10%">
+    <h3 class="fw-light" >Members</h3>
+    <div class="list-group" style=" padding: 1% 10% 1% 0">
+        <table id="userTable" class="table ">
+            <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Login</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user:${organizationUser}" >
+                <th th:text="${user.firstName}">First Name</th>
+                <th th:text="${user.lastName}">Last Name</th>
+                <th th:text="${user.login}">Login</th>
+                <th>
+                    <a th:if="${thisuser.userId == user.userId}" th:href="@{/organization/removefromorganization/{id} (id=${user.userId})}">
+                        <button type="button" class="btn btn-sm btn-outline-danger">Leave</button>
+                    </a>
+                    <a th:if="${thisuser.userId != user.userId}" sec:authorize="${hasRole('ROLE_ORGANIZERBOSS')}" th:href="@{/organization/removefromorganization/{id} (id=${user.userId})}">
+                    <button type="button" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </a>
+                </th>
+                <th>
+                    <a th:if="${thisuser.userId != user.userId}" sec:authorize="${hasRole('ROLE_ORGANIZERBOSS')}" th:href="@{/organization/makeboss/{id} (id=${user.userId})}">
+                        <button type="button" class="btn btn-sm btn btn-outline-success">Make Boss</button>
+                    </a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <form sec:authorize="${hasAuthority('ROLE_ORGANIZERBOSS')}" th:action="@{/organization/addtoorganization}" th:method="POST">
+            <label for="newMemder" class="form-label">Add New Memder</label>
+            <div class="input-group has-validation">
+                <input type="text" class="form-control" th:value="${newMemder}" name="newMemder" id="newMemder" placeholder="User Login" required>
+                <div class="invalid-feedback">
+                    Your username is required.
+                </div>
+            </div>
+            <button  type="submit" class="btn btn-secondary">Add</button>
+        </form>
+    </div>
+    </div>
+</main>
+<main th:if="${organization.getIsActive() ==0 }">
+    <div style="margin-top: 20%">
+       <p style="text-align:center; font-size: 25pt;color:#343a40">
+           Your organization has been banned or is under review
+       </p>
+    </div>
+</main>
+<footer th:insert="footer.html :: footer"></footer>
+</body>
+</html>

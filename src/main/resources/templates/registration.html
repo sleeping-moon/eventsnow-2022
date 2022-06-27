@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<section class="text-center">
+    <!-- Background image -->
+    <div class="p-5 bg-image" style="
+        background-color: #e898a3;
+        "></div>
+    <!-- Background image -->
+
+    <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: -80px;
+        background: hsla(0, 0%, 100%, 0.8);
+        backdrop-filter: blur(30px);
+        ">
+        <div class="card-body py-5 px-md-5">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-5">Sign up now</h2>
+                    <form th:action="@{/registration}" th:method="POST" th:object="${user}">
+                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <input type="text" minlength="2" maxlength="50"  id="form3Example1" th:field="*{firstName}" class="form-control" />
+                                    <label class="form-label" for="form3Example1">First name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <input type="text" minlength="1" maxlength="50"  id="form3Example2" th:field="*{lastName}" class="form-control" />
+                                    <label class="form-label" for="form3Example2">Last name</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- login input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" id="form3Example3" minlength="2" maxlength="40"  th:field="*{login}" class="form-control" />
+                            <label class="form-label" for="form3Example3">Login</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="password" minlength="6" maxlength="40" id="form3Example4" th:field="*{password}" class="form-control" />
+                            <label class="form-label" for="form3Example4">Password</label>
+                        </div>
+
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-secondary btn-block mb-4">
+                            Sign up
+                        </button>
+                        <br/>
+
+                        <a href="/login">login</a>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

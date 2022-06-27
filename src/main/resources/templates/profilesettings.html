@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>ProfileSettings</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create organization</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:object="${organization}" th:action="@{/profilesettings/creategroup}" th:method="POST">
+                <div class="modal-body">
+                    <div class="col-12">
+                        <label for="title" class="form-label">Title</label>
+                        <div class="input-group has-validation">
+                            <input type="text"  maxlength="50"  class="form-control" th:field="*{title}" name="title" id="title" required>
+                            <div class="invalid-feedback">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <div class="input-group has-validation">
+                            <input type="text"  maxlength="500" class="form-control" th:field="*{description}" name="description" id="description"  required>
+                            <div class="invalid-feedback">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="input-group has-validation">
+                            <input type="email" maxlength="500" class="form-control" th:field="*{email}" name="email" id="email" required>
+                            <div class="invalid-feedback">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{organizersEvents}" name="organizersEvents"/>
+                    <input type="hidden" th:field="*{organizerId}" name="organizerId"/>
+                    <input type="hidden" th:field="*{isActive}" name="isActive"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" >Reset</button>
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<header th:insert="header.html :: nav"></header>
+<main style="margin-top: 4%">
+    <div  class="p-5 bg-image" style="
+        background-color: #e898a3;
+        height: 350px;"></div>
+
+    <div style="margin-left: 20%; margin-right: 20%; margin-top: -300px;">
+
+        <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: -80px;
+        background: hsla(0, 0%, 100%, 0.8);
+        backdrop-filter: blur(30px);
+        ">
+
+            <div class="col-md-7 col-lg-8" style="margin:5% 0 5% 15%">
+                <h2 class="mb-3">Profile Settings</h2>
+                    <form class="needs-validation" novalidate th:action="@{/profilesettings}" th:method="POST"  th:object="${user}">
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="firstName" class="form-label">First name</label>
+                                <input type="text"  maxlength="50" class="form-control" id="firstName" th:field="*{firstName}" name="firstusername"required>
+                                <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="lastName" class="form-label">Last name</label>
+                                <input type="text"  maxlength="50" class="form-control" id="lastName"  th:field="*{lastName}" name="lastusername" required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group has-validation">
+                                    <input type="text"  maxlength="40" class="form-control" id="username" th:field="*{login}" name="username" required>
+                                    <div class="invalid-feedback">
+                                        Your username is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="select" class="form-label">Favorite Types:</label>
+                                <select class="form-select" id="select" multiple aria-label="multiple select example" th:field="*{types}">
+                                    <option th:each="resulttype:${type}"
+                                            th:field="*{types}"
+                                            th:value="${resulttype.typeId}"
+                                            th:text="${resulttype.title}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" th:field="*{password}" name="password"/>
+                        <input type="hidden" th:field="*{organizerId}" name="organizerId"/>
+                        <input type="hidden" th:field="*{userRole}" name="organizerId"/>
+                        <input type="hidden" th:field="*{userEvents}" name="organizerId"/>
+                        <input type="hidden" th:field="*{isActive}" name="isActive"/>
+                        <input type="hidden" th:field="*{userId}">
+                        <div class="col-12">
+                            <br/>
+                            <button type="submit" class="btn btn-secondary btn-block mb-4">Update</button>
+                        </div>
+                    </form>
+
+                    <hr >
+                    <h5>Change Password</h5>
+                    <form th:action="@{/profilesettings/changepassword}" th:method="POST" >
+                        <div class="col-12">
+                            <label for="oldpassword" class="form-label">Old Password</label>
+                            <div class="input-group has-validation">
+                                <input type="password" class="form-control"  th:value="${oldpassword}" name="oldpassword" id="oldpassword" placeholder="Username" required>
+                                <div class="invalid-feedback">
+                                    Your username is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="newpassword" class="form-label">New Password</label>
+                            <div class="input-group has-validation">
+                                <input type="password" minlength="6" class="form-control" th:value="${newpassword}" name="newpassword" id="newpassword" placeholder="Username" required>
+                                <div class="invalid-feedback">
+                                    Your username is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="repeatpassword" class="form-label">Repeat Password</label>
+                            <div class="input-group has-validation">
+                                <input type="password" minlength="6" class="form-control" th:value="${repeatpassword}" name="repeatpassword" id="repeatpassword" placeholder="Username" required>
+                                <div class="invalid-feedback">
+                                    Your username is required.
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <br/>
+                            <button type="submit" class="btn btn-secondary btn-block mb-4">Update password</button>
+                        </div>
+
+                        <div class="col-12"  sec:authorize="${hasRole('ROLE_USER')}">
+                            <br/>
+                            <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-info btn-block mb-4">Create group</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="footer.html :: footer"></footer>
+</body>
+</html>

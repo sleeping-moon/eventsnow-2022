@@ -1,0 +1,9 @@
+02:14:19.910 [http-nio-9999-exec-7] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) add to organization  Organizer Id:1
+14:29:59.043 [http-nio-9999-exec-10] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event Test (Id:14) Organizer Id:1
+15:09:35.039 [http-nio-9999-exec-5] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event Test (Id:14) Organizer Id:1
+15:15:28.360 [http-nio-9999-exec-8] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event The Batman (Id:7) Organizer Id:1
+02:45:48.382 [http-nio-9999-exec-10] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event The Batman (Id:7) Organizer Id:1
+02:46:44.099 [http-nio-9999-exec-4] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event Lord of the Rings 2 (Id:9) Organizer Id:1
+05:50:46.210 [http-nio-9999-exec-2] INFO  com.example.eventsnow.controllers.OrganizationController - kate123 (Id:9) update the event The Batman (Id:7) Organizer Id:1
+11:21:57.900 [http-nio-9999-exec-8] INFO  com.example.eventsnow.controllers.OrganizationController - alena123 (Id:2) removed from organization  Organizer Id:1)
+23:04:30.733 [http-nio-9999-exec-5] INFO  com.example.eventsnow.controllers.OrganizationController - alena123 (Id:2) update the event Test (Id:14) Organizer Id:1

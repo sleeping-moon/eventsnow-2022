@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<section class="vh-100" style="background-color: #CD858D;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <h3 class="mb-5">Sign in</h3>
+                        <form th:action="@{/login}" method="post">
+
+                        <div class="form-outline mb-4">
+                            <input type="text" id="typeEmailX-2" name="username" class="form-control form-control-lg" />
+                            <label class="form-label" for="typeEmailX-2">User Name</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" id="typePasswordX-2"  name="password" class="form-control form-control-lg" />
+                            <label class="form-label" for="typePasswordX-2">Password</label>
+                        </div>
+                            <button class="btn btn-secondary btn-lg btn-block" type="submit">Login</button>
+                        </form>
+                        <a href="/registration">registration</a>
+                            <div th:if="${param.error}" style="color: #eb5165">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" style="color: #eb5165">
+                                You have been logged out.
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</form>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <style>
+        .is-hidden{ color:rgb(172, 169, 169) }
+    </style>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+<main style="margin-top: 4%">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h2 class="fw-light"  th:text="${organization.getTitle()}"></h2>
+                <p class="lead text-muted" th:text="${organization.getEmail()}"></p>
+                <p class="lead text-muted" th:text="${organization.getDescription()}"></p>
+            </div>
+            <div style="margin-left: 70%">
+                <label for="searchbox" class="is-size-5">Search</label>
+                <input class="form-control" type="search" id="searchbox" placeholder="Live search keyword..">
+            </div>
+        </div>
+    </section>
+    <div class="list-group" style="margin: 0 0 5% 7%">
+        <div style="display: grid; grid-template-columns: 30% 30% 30%;
+         grid-column-gap: 2%; grid-row-gap: 2%;">
+            <div th:each="resultevents:${event}">
+                <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                         th:src="@{${resultevents.getSecondPoster()}}" />
+                    <div class="card-body">
+                        <h5 class="card-text" th:text="${resultevents.getTitle()}"></h5>
+                        <p class="card-text" th:text="${resultevents.getDescription()}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{/allevents/event/{id} (id=${resultevents.getEventId()})}">
+                                    <button type="button" th:if="${resultevents.dateCheak()}" class="btn btn-sm btn-outline-secondary">View</button>
+                                </a>
+                            </div>
+                            <small class="text-muted" th:text="${resultevents.getStringDate()}"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let cards = document.querySelectorAll('.card-body')
+
+        function liveSearch() {
+            let search_query = document.getElementById("searchbox").value;
+            for (var i = 0; i < cards.length; i++) {
+                if(cards[i].textContent.toLowerCase()
+                    .includes(search_query.toLowerCase())) {
+                    cards[i].classList.remove("is-hidden");
+                } else {
+                    cards[i].classList.add("is-hidden");
+                }
+            }
+        }
+        //A little delay
+        let typingTimer;
+        let typeInterval = 500;
+        let searchInput = document.getElementById('searchbox');
+
+        searchInput.addEventListener('keyup', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(liveSearch, typeInterval);
+        });
+    </script>
+</main>
+<footer style="margin-top: 2%"  th:insert="footer.html :: footer"></footer>
+</body>
+</html>
